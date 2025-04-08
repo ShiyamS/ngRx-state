@@ -1,0 +1,36 @@
+<div class="category-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Category List</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <ng-container *ngIf="categories?.length; else noCategories">
+          <mat-list-item *ngFor="let category of categories; trackBy: trackByCategory" class="category-item">
+            <span class="category-name">{{ category.name }}</span>
+            <span class="spacer"></span>
+            <mat-icon mat-list-icon class="delete-icon" (click)="deleteCategory(category)">delete</mat-icon>
+          </mat-list-item>
+        </ng-container>
+        <ng-template #noCategories>
+          <mat-list-item>
+            <span>There are no categories.</span>
+          </mat-list-item>
+        </ng-template>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="add-category-card">
+    <mat-card-header>
+      <mat-card-title>Add New Category</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>New Category Name</mat-label>
+        <input matInput [(ngModel)]="newCategoryName" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="addCategory()">Add Category</button>
+    </mat-card-content>
+  </mat-card>
+</div>
