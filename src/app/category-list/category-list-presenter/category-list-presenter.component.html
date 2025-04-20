@@ -28,7 +28,7 @@
     <mat-card-content>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>New Category Name</mat-label>
-        <input matInput [(ngModel)]="newCategoryName" />
+        <input matInput [(ngModel)]="newCategoryName" (enter)="addCategory()" />
       </mat-form-field>
       <button mat-raised-button color="primary" (click)="addCategory()">Add Category</button>
     </mat-card-content>

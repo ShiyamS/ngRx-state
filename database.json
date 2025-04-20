@@ -1,0 +1,34 @@
+{
+  "categories": [
+    {
+      "id": "cb65",
+      "name": "asd"
+    },
+    {
+      "id": "8811",
+      "name": "TEST"
+    },
+    {
+      "id": "7c38",
+      "name": "SHIYAM"
+    },
+    {
+      "id": "66e4",
+      "name": "ANU"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "1",
+      "description": "Food for week",
+      "categoryId": 1,
+      "amount": 700
+    },
+    {
+      "id": "2",
+      "description": "Monthly electricity bill",
+      "categoryId": 2,
+      "amount": 300
+    }
+  ]
+}

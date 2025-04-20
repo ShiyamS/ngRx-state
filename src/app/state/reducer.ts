@@ -18,16 +18,27 @@ import * as actions from './action';
 // New approach:
 
 const _reducter = createReducer(initialState,
-  on(actions.categoryAction.addCategory, (state, { category }) => ({
-    ...state.categories, categories: { ...state.categories.list, list: [...state.categories.list, category] }
+  on(actions.addCategorySuccess, (state, { payload }) => ({
+    ...state.categories, categories: { ...state.categories.list, list: [...state.categories.list, payload.category] }
   })),
   // delete a categorey
-  on(actions.categoryAction.deleteCategory, (state, { category }) => ({
-    ...state.categories, categories: { ...state.categories.list, list: state.categories.list.filter(aCategory => aCategory.name !== category.name) }
+  on(actions.categoryAction.deleteCategoryTest, (state, { category }) => ({
+    ...state.categories, categories: { ...state.categories.list, list: state.categories.list.filter(aCategory => aCategory.id !== category.id) }
   })),
   /// delete all categories
   on(actions.categoryAction.deleteAllCategories, (state) => ({
     ...state.categories, categories: { ...state.categories.list, list: [] }
+  })),
+
+  on(actions.storeCategories, (state, { categories }) => ({
+    ...state, categories: { ...state.categories.list, list: categories }
+  })),
+
+  on(actions.categoriesSuccess, (state, { categories }) => ({
+    ...state, categories: { list: categories }
+  })),
+  on(actions.delectCategorySuccess, (state, { payload }) => ({
+    ...state, categories: { ...state.categories.list, list: state.categories.list.filter(aCategory => aCategory.id !== payload.category.id) }
   }))
 );
 

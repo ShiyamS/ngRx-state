@@ -17,13 +17,13 @@ import { MatIconModule } from '@angular/material/icon';
 export class CategoryListPresenterComponent {
   @Input() categories: Category[] | null = [];
 
-  @Output() categoryAdded = new EventEmitter<Category>();
+  @Output() categoryAdded = new EventEmitter<string>();
   @Output() categoryDeleted = new EventEmitter<Category>();
   newCategoryName = ""
 
 
   addCategory() {
-    this.categoryAdded.emit({ name: this.newCategoryName });
+    this.categoryAdded.emit(this.newCategoryName);
     this.newCategoryName = "";
   }
 
