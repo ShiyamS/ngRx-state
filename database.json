@@ -1,34 +1,38 @@
 {
   "categories": [
     {
-      "id": "cb65",
+      "id": "9ca1",
       "name": "asd"
     },
     {
-      "id": "8811",
-      "name": "TEST"
+      "id": "a6fa",
+      "name": "as"
     },
     {
-      "id": "7c38",
-      "name": "SHIYAM"
+      "id": "ea1e",
+      "name": "Shiyam"
     },
     {
-      "id": "66e4",
-      "name": "ANU"
+      "id": "23c0",
+      "name": "Anagha"
     }
   ],
   "expenses": [
     {
-      "id": "1",
-      "description": "Food for week",
-      "categoryId": 1,
-      "amount": 700
+      "id": "722164",
+      "title": "Shiyam",
+      "date": "1747070265375",
+      "amount": 100,
+      "type": "Income",
+      "categoryId": "23c0"
     },
     {
-      "id": "2",
-      "description": "Monthly electricity bill",
-      "categoryId": 2,
-      "amount": 300
+      "id": "922623",
+      "title": "Anagha",
+      "date": "1747070408609",
+      "amount": 100000,
+      "type": "Spend",
+      "categoryId": "23c0"
     }
   ]
 }

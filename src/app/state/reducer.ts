@@ -40,6 +40,9 @@ const _reducter = createReducer(initialState,
   on(actions.delectCategorySuccess, (state, { payload }) => ({
     ...state, categories: { ...state.categories.list, list: state.categories.list.filter(aCategory => aCategory.id !== payload.category.id) }
   }))
+  // on(actions.delectCategorySuccess, (state, { payload }) => ({
+  //   ...state, categories: { ...state.categories.list, list: state.categories.list.filter(aCategory => aCategory.id !== payload.category.id) }
+  // }))
 );
 
 

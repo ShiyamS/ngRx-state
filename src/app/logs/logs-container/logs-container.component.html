@@ -1,0 +1,15 @@
+<div *ngIf="isLoadingList$ | async" class="loading-overlay">
+  <div class="loading-container">
+    <div class="spinner-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+    <div class="loading-text">
+      Loading<span class="dot dot1">.</span><span class="dot dot2">.</span><span class="dot dot3">.</span>
+    </div>
+  </div>
+</div>
+
+
+<app-logs-presenter *ngIf="!(isLoadingList$ | async)" [logsList]="logs$ | async " [idsOfCategory]="categoryIds$ | async"
+  (deleteLog)="onLogDeleted($event)" (submitLog)="onLogAdded($event)"
+  (updateLog)="onLogUpdated($event)"></app-logs-presenter>

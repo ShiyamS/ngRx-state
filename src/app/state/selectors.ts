@@ -6,6 +6,8 @@ import { createSelector, createFeatureSelector } from '@ngrx/store'
 export const categories = (state: { categories: AppState }) => {
   return state.categories.categories.list;
 };
+
+
 // export const selectCategoryState = createFeatureSelector<AppState, { categories: CategoryState }>('categories');
 
 // // Adjust the selector to access the nested 'categories.list'

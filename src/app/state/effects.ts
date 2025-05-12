@@ -46,7 +46,10 @@ export class CategoryEffects {
       ofType(addCategory),
       mergeMap((action) =>
         this.categoriesService.addCategory({ name: action.name }).pipe(
-          map((category) => addCategorySuccess({ payload: { category: { id: category.id, name: category.name }, message: 'Category added.' } })),
+          tap((value) => console.log('value', value)),
+          map((category) =>
+            addCategorySuccess({ payload: { category: { id: category.id, name: category.name }, message: 'Category added.' } }),
+          ),
           catchError((error) => of(addCategoryError({ error: error })))
         )
       )

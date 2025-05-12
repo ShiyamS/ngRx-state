@@ -1,0 +1,155 @@
+<div class="container">
+  <mat-toolbar color="primary">
+    <span>{{titleComp}}</span>
+  </mat-toolbar>
+
+  <div class="content-container">
+    <div class="column">
+      <mat-card class="logs-list-card">
+        <mat-card-header>
+          <mat-card-title>Logs List</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+          <table mat-table [dataSource]="logsList ?? []" class="mat-elevation-z8 financial-table">
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>ID</th>
+              <td mat-cell *matCellDef="let log">{{log.id}}</td>
+            </ng-container>
+
+            <!-- Title Column -->
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef>Title</th>
+              <td mat-cell *matCellDef="let log">{{log.title}}</td>
+            </ng-container>
+
+            <!-- Date Column -->
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef>Date</th>
+              <td mat-cell *matCellDef="let log">{{log.date | date:'mediumDate'}}</td>
+            </ng-container>
+
+            <!-- Amount Column -->
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>Amount</th>
+              <td mat-cell *matCellDef="let log"
+                [ngClass]="{'expense': log.type === 'Spend', 'income': log.type !== 'Spend'}">
+                {{log.amount | currency : 'INR'}}
+              </td>
+            </ng-container>
+
+            <!-- Type Column -->
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef>Type</th>
+              <td mat-cell *matCellDef="let log">
+                <mat-chip [ngClass]="{'warn-chip': log.type === 'Spend', 'primary-chip': log.type !== 'Spend'}">
+                  {{log.type}}
+                </mat-chip>
+              </td>
+            </ng-container>
+
+            <!-- Category Column -->
+            <ng-container matColumnDef="categoryId">
+              <th mat-header-cell *matHeaderCellDef>Category ID</th>
+              <td mat-cell *matCellDef="let log">{{log.categoryId ?? 'not mapped'}}</td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let log">
+                <button mat-icon-button color="primary" [disabled]="editFormLog" (click)="editALog(log)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+
+                <button mat-icon-button color="warn" [disabled]="editFormLog" (click)="deleteLogById(log.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="column">
+      <mat-card class="add-log-card">
+        <mat-card-header>
+          <mat-card-title>Add New Log</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <!-- Log Form HTML Template -->
+          <form #logForm="ngForm" (ngSubmit)="onSubmit()" class="log-form">
+            <h2>Create New Log Entry</h2>
+
+            <!-- Title Field -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Title</mat-label>
+              <input matInput name="title" [(ngModel)]="newLog.title" required minlength="3" #title="ngModel">
+              <mat-error *ngIf="title.invalid && (title.dirty || title.touched)">
+                <span *ngIf="title.errors?.['required']">Title is required</span>
+                <span *ngIf="title.errors?.['minlength']">Title must be at least 3 characters</span>
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Amount Field -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Amount</mat-label>
+              <input matInput type="number" name="amount" [(ngModel)]="newLog.amount" required min="0"
+                #amount="ngModel">
+              <mat-error *ngIf="amount.invalid && (amount.dirty || amount.touched)">
+                <span *ngIf="amount.errors?.['required']">Amount is required</span>
+                <span *ngIf="amount.errors?.['min']">Amount must be a positive number</span>
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Type Field -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Type</mat-label>
+              <mat-select name="type" [(ngModel)]="newLog.type" required #type="ngModel">
+                <mat-option *ngFor="let type of logTypes" [value]="type.value">
+                  {{type.label}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="type.invalid && (type.dirty || type.touched)">
+                Type is required
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Category Field -->
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Category</mat-label>
+              <mat-select name="categoryId" [(ngModel)]="newLog.categoryId" required #category="ngModel">
+                <mat-option *ngFor="let category of idsOfCategory" [value]="category.id">
+                  {{category.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="category.invalid && (category.dirty || category.touched)">
+                Category is required
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Submit Button -->
+            <div class="form-actions">
+
+              <button *ngIf="!editFormLog" mat-raised-button color="primary" type="submit" [disabled]="logForm.invalid">
+                Submit
+              </button>
+              <button *ngIf="editFormLog" mat-raised-button color="primary" type="button" (click)="updateFormLog()">
+                Update
+              </button>
+              <button mat-button type="button" (click)="resetForm()">
+                Reset
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
